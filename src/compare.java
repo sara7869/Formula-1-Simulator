@@ -1,3 +1,5 @@
+import models.Formula1Driver;
+
 import java.util.Comparator;
 
 public class compare implements Comparator<Formula1Driver> {

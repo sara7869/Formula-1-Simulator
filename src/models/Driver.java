@@ -1,3 +1,5 @@
+package models;
+
 public abstract class Driver {
     String name;
     String location;

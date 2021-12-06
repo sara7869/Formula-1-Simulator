@@ -42,7 +42,7 @@
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Display the Formula 1 Driver Table"/>
+          <text value="Display the Formula 1 models.Driver Table"/>
         </properties>
       </component>
       <component id="4a302" class="javax.swing.JButton" binding="sortTheDriverTableButton" default-binding="true">
@@ -50,7 +50,7 @@
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Sort the Driver Table in ascending order of points won by drivers"/>
+          <text value="Sort the models.Driver Table in ascending order of points won by drivers"/>
         </properties>
       </component>
       <component id="c321c" class="javax.swing.JButton" binding="sortTheDriverTableButton1" default-binding="true">
@@ -58,7 +58,7 @@
           <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Sort the Driver Table in descending order of the number of first position won in races"/>
+          <text value="Sort the models.Driver Table in descending order of the number of first position won in races"/>
         </properties>
       </component>
       <component id="b2390" class="javax.swing.JButton" binding="generateARandomRaceButton" default-binding="true">

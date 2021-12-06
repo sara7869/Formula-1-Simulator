@@ -1,3 +1,5 @@
+package gui;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,9 +15,9 @@ public class DisplayMenuGUI implements ActionListener {
         JLabel labelMenu = new JLabel("Select one of the following options.");
 
         //Create the menu buttons
-        JButton displayDriverTableButton = new JButton("Display the Formula 1 Driver Table");
-        JButton sortByPointsButton = new JButton("Sort the Driver Table in ascending order of points won by drivers");
-        JButton sortByFirstPositionButton = new JButton("Sort the Driver Table in descending order of the number of first position won in races");
+        JButton displayDriverTableButton = new JButton("Display the Formula 1 models.Driver Table");
+        JButton sortByPointsButton = new JButton("Sort the models.Driver Table in ascending order of points won by drivers");
+        JButton sortByFirstPositionButton = new JButton("Sort the models.Driver Table in descending order of the number of first position won in races");
         JButton randomRaceButton = new JButton("Generate a random race");
         JButton randomRaceWithProbabilityButton = new JButton("Generate a random race using probabilities to calculate the results");
         JButton displayRacesButton = new JButton("Display all completed races in ascending order of date played");
@@ -134,7 +136,7 @@ public class DisplayMenuGUI implements ActionListener {
 //            public void actionPerformed(ActionEvent e) {
 //                if (e.getSource() == myButton) {
 //                    frame.dispose();
-//                    DriverTable myWindow = new DriverTable();
+//                    gui.DriverTable myWindow = new gui.DriverTable();
 //                }
 //            }
 //

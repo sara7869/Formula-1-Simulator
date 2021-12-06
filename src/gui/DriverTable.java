@@ -1,6 +1,8 @@
+package gui;
+
 import javax.swing.*;
 
-//public class DriverTable (JFrame frame){
+//public class gui.DriverTable (JFrame frame){
 //    String[] columnNames = {"First Name",
 //                    "Last Name",
 //                    "Position",
