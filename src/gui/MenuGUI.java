@@ -5,9 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class DisplayMenuGUI implements ActionListener {
+public class MenuGUI implements ActionListener {
 
-    private void Display() {
+    public static void initialiseUI() {
 
         JFrame frame = new JFrame("FrameExample");
         //Create the Welcome labels

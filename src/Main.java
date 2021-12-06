@@ -1,3 +1,5 @@
+import gui.MenuGUI;
+
 import java.io.IOException;
 
 public class Main {
@@ -20,7 +22,7 @@ public class Main {
             case 6 -> formula1ChampionshipManager.addRace();
             case 7 -> formula1ChampionshipManager.saveInfoToFile();
             case 8 -> formula1ChampionshipManager.recoverPreviousState();
-            case 9 -> Swing.initialiseUI();
+            case 9 -> MenuGUI.initialiseUI();
             case 10 -> formula1ChampionshipManager.exitProgram();
             default -> {
                 System.out.println("Enter a valid choice.");
