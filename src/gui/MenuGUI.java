@@ -5,11 +5,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MenuGUI implements ActionListener {
+public class MenuGUI {
 
-    public static void initialiseUI() {
+    private JFrame frame;
 
-        JFrame frame = new JFrame("FrameExample");
+    public void initialiseUI() {
+
+//        JFrame frame = new JFrame("FrameExample");
+        frame = new JFrame("FrameExample");
+
         //Create the Welcome labels
         JLabel labelWelcome = new JLabel("Welcome to the Formula 1 racing car championship.");
         JLabel labelMenu = new JLabel("Select one of the following options.");
@@ -55,7 +59,6 @@ public class MenuGUI implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == myButton) {
-                frame.dispose();
                 NewWindow myWindow = new NewWindow();
             }
         }
@@ -64,7 +67,8 @@ public class MenuGUI implements ActionListener {
     class displayDriverTable implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            frame.dispose();
+            DriverTable driverTable = new DriverTable();
         }
     }
 
