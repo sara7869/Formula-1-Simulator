@@ -55,20 +55,25 @@ public class MenuGUI {
 
     }
 
-    class openNewWindow implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == myButton) {
-                NewWindow myWindow = new NewWindow();
-            }
-        }
-    }
+//    class openNewWindow implements ActionListener {
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//            if (e.getSource() == myButton) {
+//                NewWindow myWindow = new NewWindow();
+//            }
+//        }
+//    }
 
     class displayDriverTable implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            frame.dispose();
-            DriverTable driverTable = new DriverTable();
+//      Create and set up the content pane.
+            DriverTable newContentPane = new DriverTable();
+            newContentPane.setOpaque(true); // content panes must be opaque
+            frame.setContentPane(newContentPane);
+            frame.pack();
+            frame.setVisible(true);
+
         }
     }
 
