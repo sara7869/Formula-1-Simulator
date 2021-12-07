@@ -205,7 +205,7 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
     }
 
     public void displayDriverTable() {
-        Collections.sort(driverArrayList,new compare());
+        Collections.sort(driverArrayList,new comparePointsDescending());
         System.out.println(
                 "\nName\t|\tTeam\t|\tLocation\t|\tFirst Positions\t|\tSecond Positions\t|\tThird Positions\t|\tTotal Points\t|\tParticipated Races");
         for (Formula1Driver formula1Driver : driverArrayList) {

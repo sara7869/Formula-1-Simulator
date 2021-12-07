@@ -1,11 +1,13 @@
 package gui;
 
-import gui.DriverTable;
+import main.Formula1ChampionshipManager;
+import main.comparePointsDescending;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collections;
 
 public class MenuGUI extends Container {
 
@@ -22,7 +24,7 @@ public class MenuGUI extends Container {
         //Create the menu buttons
         JButton displayDriverTableButton = new JButton("Display the Formula 1 Driver Table");
         JButton sortByPointsButton = new JButton("Sort the Driver Table in ascending order of points won by drivers");
-        JButton sortByFirstPositionButton = new JButton("Sort the models.Driver Table in descending order of the number of first position won in races");
+        JButton sortByFirstPositionButton = new JButton("Sort the Driver Table in descending order of the number of first position won in races");
         JButton randomRaceButton = new JButton("Generate a random race");
         JButton randomRaceWithProbabilityButton = new JButton("Generate a random race using probabilities to calculate the results");
         JButton displayRacesButton = new JButton("Display all completed races in ascending order of date played");
@@ -94,14 +96,34 @@ public class MenuGUI extends Container {
     class sortByPoints implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            Collections.sort(Formula1ChampionshipManager.driverArrayList,new comparePointsAscending());
+            DriverTable newContentPane = new DriverTable();
+            newContentPane.setOpaque(true); // content panes must be opaque
+            JButton backButton = new JButton("Back to menu");
 
+            backButton.addActionListener(new backToMenu());
+
+            frame.setContentPane(newContentPane);
+            frame.add(backButton);
+            frame.setSize(1000,500);
+            frame.setVisible(true);
         }
     }
 
     class sortByFirstPosition implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            Collections.sort(Formula1ChampionshipManager.driverArrayList,new compareFirstPositionsDescending());
+            DriverTable newContentPane = new DriverTable();
+            newContentPane.setOpaque(true); // content panes must be opaque
+            JButton backButton = new JButton("Back to menu");
 
+            backButton.addActionListener(new backToMenu());
+
+            frame.setContentPane(newContentPane);
+            frame.add(backButton);
+            frame.setSize(1000,500);
+            frame.setVisible(true);
         }
     }
 
