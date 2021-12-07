@@ -99,7 +99,6 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
 
             for (int count = 0; count < (driverArrayList.size()); count++) {
                 if (driverArrayList.get(count).name == name) {
-
                     System.out.println("\nThis driver has already been added to the championship.");
                     driverAdded = false;
                 } else {
@@ -205,28 +204,32 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
     }
 
     public void displayDriverTable() {
-        Collections.sort(driverArrayList,new comparePointsDescending());
+        Collections.sort(driverArrayList, new comparePointsDescending());
         System.out.println(
                 "\nName\t|\tTeam\t|\tLocation\t|\tFirst Positions\t|\tSecond Positions\t|\tThird Positions\t|\tTotal Points\t|\tParticipated Races");
         for (Formula1Driver formula1Driver : driverArrayList) {
             System.out.println(formula1Driver.name + "\t|\t" + formula1Driver.team + "\t|\t" + formula1Driver.location
-                    + "\t|\t" + formula1Driver.firstPositionCount + "\t|\t" + formula1Driver.secondPositionCount
-                    + "\t|\t" + formula1Driver.thirdPositionCount + "\t|\t" + formula1Driver.totalPoints + "\t|\t"
-                    + formula1Driver.participatedRaceCount);
+                               + "\t|\t" + formula1Driver.firstPositionCount + "\t|\t" + formula1Driver.secondPositionCount
+                               + "\t|\t" + formula1Driver.thirdPositionCount + "\t|\t" + formula1Driver.totalPoints + "\t|\t"
+                               + formula1Driver.participatedRaceCount);
         }
 
     }
 
-
-
     public void addRace() {
         String date;
-        int position;
+//        int position;
+        int count;
         String inputInfoCorrect = "N";
         String raceToBeAdded = "Y";
         boolean raceAdded = false;
-
-        // String [] positions = new String[6];
+        int count1 = 0;
+        boolean driverInList = false;
+        int points;
+        String team;
+        String location;
+        Formula1Driver formula1Driver;
+        int arrayListCount = 0;
 
         initialisePositions();
         while (raceToBeAdded.equals("Y")) {
@@ -234,33 +237,84 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
             while (inputInfoCorrect.equals("N")) { // operation iteration
                 // Get user input
                 System.out.println("Enter the date of the race in the format yyyy/mm/dd.");
-                scanner.nextLine();
+                if (count1 == 0) {
+                    scanner.nextLine();
+                }
                 date = scanner.nextLine();
                 System.out.println("Enter the name of the drivers at the following positions.");
 
-                for (int count = 0; count < 9; count++) {
-                    position = count + 1;
+                for (int position = 1; position < 11; position++) {
+                    count = position - 1;
                     System.out.print(position + " : ");
-                    positions[position] = scanner.nextLine();
+                    positions[count] = scanner.nextLine();
                 }
 
                 System.out.println("\n");
                 // display positions and get confirmation
 
-                for (int count = 0; count < 9; count++) {
-                    position = count + 1;
+                for (int position = 1; position < 11; position++) {
+                    count = position - 1;
                     System.out.println(position + " : " + positions[count]);
                 }
                 System.out.println("\nAre these details correct? Press Y to confirm or N to re-enter.");
                 inputInfoCorrect = scanner.nextLine();
+                count1 = count1 + 1;
             }
 
-            for (int count = 0; count < (driverArrayList.size()); count++) {
-                // if (driverArrayList.get(count).secondPositionCount == date) {
-                System.out.println("\nThis race has already been added.");
-                raceAdded = false;
+            for (int count2 = 0; count2 < 10; count2++) {
+                driverInList = false;
+
+                for (int count3 = 0; count3 < driverArrayList.size(); count3++) {
+                    if (driverArrayList.get(count3).name.equals(positions[count2])) {
+                        driverInList = true;
+                        arrayListCount = count3;
+                        break;
+                    }
+                }
+                if (!driverInList) {
+                    System.out.println("Driver " + positions[count2] + " is new. Please enter their team/manufacturer name:");
+                    team = scanner.nextLine();
+                    System.out.println("Enter their location:");
+                    location = scanner.nextLine();
+
+                    formula1Driver = new Formula1Driver(positions[count2], team, location, 0, 0, 0, 0, 0);
+                    driverArrayList.add(formula1Driver);
+                    arrayListCount = driverArrayList.size()-1;
+                }
+                formula1Driver = driverArrayList.get(arrayListCount);
+                switch (count2) {
+                    case 0 -> {
+                        points = 25;
+                        formula1Driver.firstPositionCount++;
+                    }
+                    case 1 -> {points = 18;
+                        formula1Driver.secondPositionCount++;
+                    }
+                    case 2 -> {points = 15;
+                        formula1Driver.thirdPositionCount++;
+                    }
+                    case 3 -> points = 12;
+                    case 4 -> points = 10;
+                    case 5 -> points = 8;
+                    case 6 -> points = 6;
+                    case 7 -> points = 4;
+                    case 8 -> points = 2;
+                    case 9 -> points = 1;
+                    default -> throw new IllegalStateException("Unexpected value: " + count2);
+                }
+
+                formula1Driver.totalPoints=formula1Driver.totalPoints+points;
+                formula1Driver.participatedRaceCount++;
             }
+
+
+            System.out.println("\nRace added.");
+
+            System.out.println("\nDo you want to add another race? Press Y if yes or N if no.");
+            raceToBeAdded = scanner.nextLine();
+
         }
+
     }
 
     private void initialisePositions() {
@@ -274,11 +328,11 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
         bufferedWriter = new BufferedWriter(fileWriter);
 
         for (Formula1Driver formula1Driver : driverArrayList) {
-            String[] recordArray = new String[] { formula1Driver.name, formula1Driver.team, formula1Driver.location,
+            String[] recordArray = new String[]{formula1Driver.name, formula1Driver.team, formula1Driver.location,
                     String.valueOf(formula1Driver.firstPositionCount),
                     String.valueOf(formula1Driver.secondPositionCount),
                     String.valueOf(formula1Driver.thirdPositionCount), String.valueOf(formula1Driver.totalPoints),
-                    String.valueOf(formula1Driver.participatedRaceCount) };
+                    String.valueOf(formula1Driver.participatedRaceCount)};
             String record = String.join(";", recordArray);
             bufferedWriter.write(record);
             bufferedWriter.newLine();
