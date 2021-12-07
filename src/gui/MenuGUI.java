@@ -11,7 +11,6 @@ public class MenuGUI {
 
     public void initialiseUI() {
 
-//        JFrame frame = new JFrame("FrameExample");
         frame = new JFrame("FrameExample");
 
         //Create the Welcome labels
