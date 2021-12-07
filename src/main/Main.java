@@ -1,3 +1,5 @@
+package main;
+
 import gui.MenuGUI;
 
 import java.io.IOException;

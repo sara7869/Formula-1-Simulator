@@ -1,3 +1,5 @@
+package main;
+
 import models.ChampionshipManager;
 import models.Formula1Driver;
 
