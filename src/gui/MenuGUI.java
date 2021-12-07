@@ -1,11 +1,13 @@
 package gui;
 
+import gui.DriverTable;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MenuGUI {
+public class MenuGUI extends Container {
 
     private JFrame frame;
 
@@ -18,8 +20,8 @@ public class MenuGUI {
         JLabel labelMenu = new JLabel("Select one of the following options.");
 
         //Create the menu buttons
-        JButton displayDriverTableButton = new JButton("Display the Formula 1 models.Driver Table");
-        JButton sortByPointsButton = new JButton("Sort the models.Driver Table in ascending order of points won by drivers");
+        JButton displayDriverTableButton = new JButton("Display the Formula 1 Driver Table");
+        JButton sortByPointsButton = new JButton("Sort the Driver Table in ascending order of points won by drivers");
         JButton sortByFirstPositionButton = new JButton("Sort the models.Driver Table in descending order of the number of first position won in races");
         JButton randomRaceButton = new JButton("Generate a random race");
         JButton randomRaceWithProbabilityButton = new JButton("Generate a random race using probabilities to calculate the results");
@@ -48,7 +50,6 @@ public class MenuGUI {
         container.add(searchButton);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(750, 750);
         frame.pack();
         frame.setVisible(true);
 
@@ -66,13 +67,27 @@ public class MenuGUI {
     class displayDriverTable implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-//      Create and set up the content pane.
+//          Create and set up the content pane.
             DriverTable newContentPane = new DriverTable();
             newContentPane.setOpaque(true); // content panes must be opaque
-            frame.setContentPane(newContentPane);
-            frame.pack();
-            frame.setVisible(true);
+            JButton backButton = new JButton("Back to menu");
 
+            backButton.addActionListener(new backToMenu());
+
+            frame.setContentPane(newContentPane);
+            frame.add(backButton);
+            frame.setSize(1000,500);
+            frame.setVisible(true);
+        }
+    }
+
+    class backToMenu implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e){
+            MenuGUI newContentPane = new MenuGUI();
+//            newContentPane.setOpaque(true); // content panes must be opaque
+            frame.setContentPane(newContentPane);
+            frame.setVisible(true);
         }
     }
 
@@ -125,11 +140,11 @@ public class MenuGUI {
 //import java.awt.event .*;
 //import javax.swing .*;
 //
-//        public class MenuGUI implements ActionListener {
+//        public class gui.MenuGUI implements ActionListener {
 //            JFrame frame = new JFrame();
 //            JButton myButton = new JButton("New Window");
 //
-//            MenuGUI() {
+//            gui.MenuGUI() {
 //                myButton.setBounds(100, 160, 200, 40);
 //                myButton.setFocusable(false);
 //                myButton.addActionListener(this);
