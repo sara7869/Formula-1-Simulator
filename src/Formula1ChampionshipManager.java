@@ -10,7 +10,7 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
 
     static Scanner scanner = new Scanner(System.in);
     public String[] positions = new String[10];
-    static ArrayList<Formula1Driver> driverArrayList = new ArrayList<Formula1Driver>();
+    public static ArrayList<Formula1Driver> driverArrayList = new ArrayList<Formula1Driver>();
     static FileWriter fileWriter;
     static BufferedWriter bufferedWriter;
     static FileReader fileReader;
@@ -27,7 +27,7 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
                 2: Delete a driver and the team that the driver belongs to from the championship
                 3: Change the driver for an existing constructor team
                 4: Display the various statistics for a selected existing driver
-                5: Display the Formula 1 models.Driver Table
+                5: Display the Formula 1 Driver Table
                 6: Add a race completed with its date and the positions that all the drivers achieved
                 7: Save all the information to a file
                 8: Recover the previous state of the program the next time the application starts
@@ -66,7 +66,7 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
                     scanner.nextLine();
                 }
                 name = scanner.nextLine();
-                System.out.println("\nmodels.Team/Manufacturer for the new driver:");
+                System.out.println("\nTeam/Manufacturer for the new driver:");
                 team = scanner.nextLine();
                 System.out.println("\nLocation of the new driver:");
                 location = scanner.nextLine();
@@ -82,7 +82,7 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
                 participatedRaceCount = scanner.nextInt();
 
                 System.out.println("\nName: " + name);
-                System.out.println("models.Team/Manufacturer: " + team);
+                System.out.println("Team/Manufacturer: " + team);
                 System.out.println("Location: " + location);
                 System.out.println("First Position Count: " + firstPositionCount);
                 System.out.println("Second Position Count: " + secondPositionCount);
@@ -141,12 +141,12 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
                 if (driverName.equals(name)) {
                     driverArrayList.remove(count);
                     driverRemoved = true;
-                    System.out.println("models.Driver " + driverName + " has been removed.");
+                    System.out.println("Driver " + driverName + " has been removed.");
                     displayDriverTable();
                 }
             }
             if (!driverRemoved) {
-                System.out.println("models.Driver not found.");
+                System.out.println("Driver not found.");
             }
         }
     }
@@ -167,12 +167,12 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
                 name = scanner.nextLine();
                 driverArrayList.get(count).name = name;
                 driverRemoved = true;
-                System.out.println("models.Driver has been changed for team " + team);
+                System.out.println("Driver has been changed for team " + team);
                 displayDriverTable();
             }
         }
         if (!driverRemoved) {
-            System.out.println("models.Team not found.");
+            System.out.println("Team not found.");
         }
 
     }
@@ -181,20 +181,21 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
         if (driverArrayList.size() == 0) {
             System.out.println("There are no added drivers.");
         } else {
-            System.out.println("Enter the name of the driver.");
+            displayDriverTable();
+            System.out.println("\nEnter the name of the driver.");
             scanner.nextLine();
             String name = scanner.nextLine();
-            for (int count = 0; count < driverArrayList.size(); count++) {
-                if (driverArrayList.get(count).name == name) {
-                    System.out.println("Name: " + driverArrayList.get(count).name);
-                    System.out.println("Location: " + driverArrayList.get(count).location);
-                    System.out.println("models.Team: " + driverArrayList.get(count).team);
-                    System.out.println("First Position Count: " + driverArrayList.get(count).firstPositionCount);
-                    System.out.println("Second Position Count: " + driverArrayList.get(count).secondPositionCount);
-                    System.out.println("Third Position Count: " + driverArrayList.get(count).thirdPositionCount);
-                    System.out.println("Total Points: " + driverArrayList.get(count).totalPoints);
-                    System.out.println("Participated Race Count: " + driverArrayList.get(count).participatedRaceCount);
-                    continue;
+            for (Formula1Driver formula1Driver : driverArrayList) {
+                if (formula1Driver.name.equals(name)) {
+                    System.out.println("\nName: " + formula1Driver.name);
+                    System.out.println("Location: " + formula1Driver.location);
+                    System.out.println("Team: " + formula1Driver.team);
+                    System.out.println("First Position Count: " + formula1Driver.firstPositionCount);
+                    System.out.println("Second Position Count: " + formula1Driver.secondPositionCount);
+                    System.out.println("Third Position Count: " + formula1Driver.thirdPositionCount);
+                    System.out.println("Total Points: " + formula1Driver.totalPoints);
+                    System.out.println("Participated Race Count: " + formula1Driver.participatedRaceCount);
+                    break;
                 }
             }
         }
@@ -204,7 +205,7 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
     public void displayDriverTable() {
         Collections.sort(driverArrayList,new compare());
         System.out.println(
-                "\nName\t|\tmodels.Team\t|\tLocation\t|\tFirst Positions\t|\tSecond Positions\t|\tThird Positions\t|\tTotal Points\t|\tParticipated Races");
+                "\nName\t|\tTeam\t|\tLocation\t|\tFirst Positions\t|\tSecond Positions\t|\tThird Positions\t|\tTotal Points\t|\tParticipated Races");
         for (Formula1Driver formula1Driver : driverArrayList) {
             System.out.println(formula1Driver.name + "\t|\t" + formula1Driver.team + "\t|\t" + formula1Driver.location
                     + "\t|\t" + formula1Driver.firstPositionCount + "\t|\t" + formula1Driver.secondPositionCount

@@ -1,18 +1,21 @@
 package gui;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class DriverTable extends JPanel{
     JFrame frame = new JFrame();
     JLabel label = new JLabel("Driver Table");
     DriverTable() {
-        String[] columnNames = {"First Name",
-                "Last Name",
-                "Position",
-                "Age",
-                "Salary"};
+        String[] columnNames = {"Name",
+                "Team",
+                "Location",
+                "First Position Count",
+                "Second Position Count",
+                "Third Position Count",
+                "Total Points",
+                "Participated Races Count"};
         Object[][] data = {
+//                {Main.formula1ChampionshipManager.driverArrayList.name},
                 {"John", "Smith", "Manager", 35, 40000},
                 {"Tom", "Bubble", "Developer", 22, 22000},
                 {"Helen", "Hitchcock", "Project Leader", 30, 34000},
