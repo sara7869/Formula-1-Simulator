@@ -218,11 +218,9 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
 
     public void addRace() {
         String date;
-//        int position;
         int count;
-        String inputInfoCorrect = "N";
+        String inputInfoCorrect;
         String raceToBeAdded = "Y";
-        boolean raceAdded = false;
         int count1 = 0;
         boolean driverInList = false;
         int points;
