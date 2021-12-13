@@ -71,15 +71,6 @@ public class MenuGUI extends Container {
 
     }
 
-//    class openNewWindow implements ActionListener {
-//        @Override
-//        public void actionPerformed(ActionEvent e) {
-//            if (e.getSource() == myButton) {
-//                NewWindow myWindow = new NewWindow();
-//            }
-//        }
-//    }
-
     class MenuButtons {
         public void buttons(Container container) {
             displayDriverTableButton = new JButton("Display the Formula 1 Driver Table");
@@ -181,7 +172,6 @@ public class MenuGUI extends Container {
     }
 
     class RandomRace implements ActionListener {
-        //        @Override
         private boolean alreadyAdded = false;
 
         /**
@@ -211,11 +201,11 @@ public class MenuGUI extends Container {
             int day = (int) (Math.random() * 30);
             int month = (int) (Math.random() * 12);
             String year = String.valueOf((int) (Math.random() * 10));
-            year = "202"+year;
-            String date = year+"/"+month+"/"+day;
+            year = "202" + year;
+            String date = year + "/" + month + "/" + day;
 
             //Add race
-            Race race = new Race(date,positions);
+            Race race = new Race(date, positions);
             raceArrayList.add(race);
             System.out.println("Race added.");
 
@@ -234,17 +224,69 @@ public class MenuGUI extends Container {
         }
     }
 
-    static class RandomRaceWithProbability implements ActionListener {
-        @Override
+    class RandomRaceWithProbability implements ActionListener {
+        private boolean alreadyAdded = false;
+
         public void actionPerformed(ActionEvent e) {
+            //Check if at least 10 drivers have been added
+            if (Formula1ChampionshipManager.driverArrayList.size() < 10) {
+                System.out.println("At least 10 drivers are needed to add a race. Add more and try again.");
+                return;
+            }
+            //Randomly generate positions
+            for (int count = 0; count < 9; count++) {
+                index[count] = (int) (Math.random() * Formula1ChampionshipManager.driverArrayList.size());
+                for (int count2 = 0; count2 < count; count2++) {
+                    if (index[count] == index[count2]) {
+                        alreadyAdded = true;
+                        break;
+                    }
+                }
+                if (!alreadyAdded) {
+                    positions[count] = Formula1ChampionshipManager.driverArrayList.get(index[count]).name;
+                }
+            }
+
+            //Randomly generate date of race
+            int day = (int) (Math.random() * 30);
+            int month = (int) (Math.random() * 12);
+            String year = String.valueOf((int) (Math.random() * 10));
+            year = "202" + year;
+            String date = year + "/" + month + "/" + day;
+
+            //Add race
+            Race race = new Race(date, positions);
+            raceArrayList.add(race);
+            System.out.println("Race added.");
+
+            //Display race
+            RaceTable raceTable = new RaceTable();
+            raceTable.setOpaque(true);
+            JButton displayDriverTableButton = new JButton("Display Driver Table");
+
+            displayDriverTableButton.addActionListener(new DriverTableDisplay());
+
+            frame.setContentPane(raceTable);
+            frame.add(displayDriverTableButton);
+            frame.setSize(1000, 500);
+            frame.setVisible(true);
+
 
         }
     }
 
-    static class RaceDisplay implements ActionListener {
+    class RaceDisplay implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            RaceTable raceTable = new RaceTable();
+            raceTable.setOpaque(true);
+//            JButton backButton = new JButton("Back to menu");
+//            backButton.addActionListener(new BackToMenu());
 
+            frame.setContentPane(raceTable);
+//            frame.add(backButton);
+            frame.setSize(1000, 500);
+            frame.setVisible(true);
         }
     }
 
@@ -256,33 +298,3 @@ public class MenuGUI extends Container {
         }
     }
 }
-//}
-//
-//}
-//import java.awt.event .*;
-//import javax.swing .*;
-//
-//        public class gui.MenuGUI implements ActionListener {
-//            JFrame frame = new JFrame();
-//            JButton myButton = new JButton("New Window");
-//
-//            gui.MenuGUI() {
-//                myButton.setBounds(100, 160, 200, 40);
-//                myButton.setFocusable(false);
-//                myButton.addActionListener(this);
-//                frame.add(myButton);
-//                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//                frame.setSize(420, 420);
-//                frame.setLayout(null);
-//                frame.setVisible(true);
-//            }
-//
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                if (e.getSource() == myButton) {
-//                    frame.dispose();
-//                    gui.DriverTable myWindow = new gui.DriverTable();
-//                }
-//            }
-//
-//        }
