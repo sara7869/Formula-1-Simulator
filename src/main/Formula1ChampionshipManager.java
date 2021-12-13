@@ -2,6 +2,7 @@ package main;
 
 import models.ChampionshipManager;
 import models.Formula1Driver;
+import models.Race;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,12 +12,14 @@ import java.util.Scanner;
 public class Formula1ChampionshipManager implements ChampionshipManager {
 
     static Scanner scanner = new Scanner(System.in);
-    public String[] positions = new String[10];
+    private String[] positions = new String[10];
     public static ArrayList<Formula1Driver> driverArrayList = new ArrayList<Formula1Driver>();
+    public static ArrayList<Race> raceArrayList = new ArrayList<Race>();
     static FileWriter fileWriter;
     static BufferedWriter bufferedWriter;
     static FileReader fileReader;
     static BufferedReader bufferedReader;
+//    public int raceCount=1;
 
     public int printMenu() {
         // The menu is displayed in the console
@@ -217,7 +220,7 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
     }
 
     public void addRace() {
-        String date;
+        String date = "";
         int count;
         String inputInfoCorrect;
         String raceToBeAdded = "Y";
@@ -277,7 +280,7 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
 
                     formula1Driver = new Formula1Driver(positions[count2], team, location, 0, 0, 0, 0, 0);
                     driverArrayList.add(formula1Driver);
-                    arrayListCount = driverArrayList.size()-1;
+                    arrayListCount = driverArrayList.size() - 1;
                 }
                 formula1Driver = driverArrayList.get(arrayListCount);
                 switch (count2) {
@@ -285,10 +288,12 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
                         points = 25;
                         formula1Driver.firstPositionCount++;
                     }
-                    case 1 -> {points = 18;
+                    case 1 -> {
+                        points = 18;
                         formula1Driver.secondPositionCount++;
                     }
-                    case 2 -> {points = 15;
+                    case 2 -> {
+                        points = 15;
                         formula1Driver.thirdPositionCount++;
                     }
                     case 3 -> points = 12;
@@ -301,11 +306,12 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
                     default -> throw new IllegalStateException("Unexpected value: " + count2);
                 }
 
-                formula1Driver.totalPoints=formula1Driver.totalPoints+points;
+                formula1Driver.totalPoints = formula1Driver.totalPoints + points;
                 formula1Driver.participatedRaceCount++;
             }
 
-
+            Race race = new Race(date,positions);
+            raceArrayList.add(race);
             System.out.println("\nRace added.");
 
             System.out.println("\nDo you want to add another race? Press Y if yes or N if no.");

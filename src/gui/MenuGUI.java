@@ -1,13 +1,15 @@
 package gui;
 
 import main.Formula1ChampionshipManager;
-import main.comparePointsDescending;
+import models.Race;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
+
+import static main.Formula1ChampionshipManager.raceArrayList;
 
 public class MenuGUI extends Container {
 
@@ -20,6 +22,8 @@ public class MenuGUI extends Container {
     private JButton randomRaceWithProbabilityButton;
     private JButton displayRacesButton;
     private JButton searchButton;
+    private String[] positions = new String[10];
+    private int[] index = new int[10];
 
     public void initialiseUI() {
 
@@ -50,7 +54,7 @@ public class MenuGUI extends Container {
         Container container = frame.getContentPane();
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         container.add(labelWelcome);
-        menuButtons menuButtons = new menuButtons();
+        MenuButtons menuButtons = new MenuButtons();
         menuButtons.buttons(container);
 //        container.add(labelMenu);
 //        container.add(displayDriverTableButton);
@@ -76,8 +80,8 @@ public class MenuGUI extends Container {
 //        }
 //    }
 
-    class menuButtons{
-        public void buttons(Container container){
+    class MenuButtons {
+        public void buttons(Container container) {
             displayDriverTableButton = new JButton("Display the Formula 1 Driver Table");
             sortByPointsButton = new JButton("Sort the Driver Table in ascending order of points won by drivers");
             sortByFirstPositionButton = new JButton("Sort the Driver Table in descending order of the number of first position won in races");
@@ -86,13 +90,13 @@ public class MenuGUI extends Container {
             displayRacesButton = new JButton("Display all completed races in ascending order of date played");
             searchButton = new JButton("Search for all races that a given driver participated");
 
-            displayDriverTableButton.addActionListener(new displayDriverTable());
-            sortByPointsButton.addActionListener(new sortByPoints());
-            sortByFirstPositionButton.addActionListener(new sortByFirstPosition());
-            randomRaceButton.addActionListener(new randomRace());
-            randomRaceWithProbabilityButton.addActionListener(new randomRaceWithProbability());
-            displayRacesButton.addActionListener(new displayRaces());
-            searchButton.addActionListener(new search());
+            displayDriverTableButton.addActionListener(new DriverTableDisplay());
+            sortByPointsButton.addActionListener(new PointSort());
+            sortByFirstPositionButton.addActionListener(new FirstPositionSort());
+            randomRaceButton.addActionListener(new RandomRace());
+            randomRaceWithProbabilityButton.addActionListener(new RandomRaceWithProbability());
+            displayRacesButton.addActionListener(new RaceDisplay());
+            searchButton.addActionListener(new Search());
 
             container.add(labelMenu);
             container.add(displayDriverTableButton);
@@ -105,7 +109,7 @@ public class MenuGUI extends Container {
         }
     }
 
-    class displayDriverTable implements ActionListener {
+    class DriverTableDisplay implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
 //          Create and set up the content pane.
@@ -113,7 +117,7 @@ public class MenuGUI extends Container {
             newContentPane.setOpaque(true); // content panes must be opaque
             JButton backButton = new JButton("Back to menu");
 
-            backButton.addActionListener(new backToMenu());
+            backButton.addActionListener(new BackToMenu());
 
             frame.setContentPane(newContentPane);
             frame.add(backButton);
@@ -122,7 +126,7 @@ public class MenuGUI extends Container {
         }
     }
 
-    class backToMenu implements ActionListener {
+    class BackToMenu implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             MenuGUI newContentPane = new MenuGUI();
@@ -135,14 +139,14 @@ public class MenuGUI extends Container {
 //            newContentPane.add(displayRacesButton);
 //            newContentPane.add(searchButton);
 //            newContentPane.setOpaque(true); // content panes must be opaque
-            menuButtons menubuttons = new menuButtons();
+            MenuButtons menubuttons = new MenuButtons();
             frame.setContentPane(newContentPane);
             menubuttons.buttons(newContentPane);
             frame.setVisible(true);
         }
     }
 
-    class sortByPoints implements ActionListener {
+    class PointSort implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             Collections.sort(Formula1ChampionshipManager.driverArrayList, new comparePointsAscending());
@@ -150,7 +154,7 @@ public class MenuGUI extends Container {
             newContentPane.setOpaque(true); // content panes must be opaque
             JButton backButton = new JButton("Back to menu");
 
-            backButton.addActionListener(new backToMenu());
+            backButton.addActionListener(new BackToMenu());
 
             frame.setContentPane(newContentPane);
             frame.add(backButton);
@@ -159,7 +163,7 @@ public class MenuGUI extends Container {
         }
     }
 
-    class sortByFirstPosition implements ActionListener {
+    class FirstPositionSort implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             Collections.sort(Formula1ChampionshipManager.driverArrayList, new compareFirstPositionsDescending());
@@ -167,7 +171,7 @@ public class MenuGUI extends Container {
             newContentPane.setOpaque(true); // content panes must be opaque
             JButton backButton = new JButton("Back to menu");
 
-            backButton.addActionListener(new backToMenu());
+            backButton.addActionListener(new BackToMenu());
 
             frame.setContentPane(newContentPane);
             frame.add(backButton);
@@ -176,28 +180,64 @@ public class MenuGUI extends Container {
         }
     }
 
-    class randomRace implements ActionListener {
+    class RandomRace implements ActionListener {
+        //        @Override
+        private boolean alreadyAdded = false;
+
+        /**
+         * @param e
+         */
+        public void actionPerformed(ActionEvent e) {
+            //Check if at least 10 drivers have been added
+            if (Formula1ChampionshipManager.driverArrayList.size() < 10) {
+                System.out.println("At least 10 drivers are needed to add a race. Add more and try again.");
+                return;
+            }
+            //Randomly generate positions
+            for (int count = 0; count < 9; count++) {
+                index[count] = (int) (Math.random() * Formula1ChampionshipManager.driverArrayList.size());
+                for (int count2 = 0; count2 < count; count2++) {
+                    if (index[count] == index[count2]) {
+                        alreadyAdded = true;
+                        break;
+                    }
+                }
+                if (!alreadyAdded) {
+                    positions[count] = Formula1ChampionshipManager.driverArrayList.get(index[count]).name;
+                }
+            }
+
+            //Randomly generate date of race
+            int day = (int) (Math.random() * 30);
+            int month = (int) (Math.random() * 12);
+            int year = (int) (Math.random() * 10);
+            String date = year+"/"+month+"/"+day;
+
+            //Add race
+            Race race = new Race(date,positions);
+            raceArrayList.add(race);
+            System.out.println("Race added.");
+
+            //Display race
+
+        }
+    }
+
+    static class RandomRaceWithProbability implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
 
         }
     }
 
-    class randomRaceWithProbability implements ActionListener {
+    static class RaceDisplay implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
 
         }
     }
 
-    class displayRaces implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-        }
-    }
-
-    class search implements ActionListener {
+    static class Search implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {

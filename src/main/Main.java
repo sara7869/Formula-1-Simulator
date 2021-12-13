@@ -11,7 +11,7 @@ public class Main {
 
         Formula1ChampionshipManager formula1ChampionshipManager = new Formula1ChampionshipManager();
 
-        while (choice != 9) {
+        while (choice != 10) {
 
             choice = formula1ChampionshipManager.printMenu();
 
