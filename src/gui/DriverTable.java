@@ -6,8 +6,8 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 public class DriverTable extends JPanel {
-    JFrame frame = new JFrame();
-    JLabel label = new JLabel("Driver Table");
+//    JFrame frame = new JFrame();
+//    JLabel label = new JLabel("Driver Table");
 
     DriverTable() {
         String[] columnNames = {"Name",
@@ -19,7 +19,7 @@ public class DriverTable extends JPanel {
                 "Total Points",
                 "Participated Races Count"};
 
-        Formula1ChampionshipManager qwe = new Formula1ChampionshipManager();
+//        Formula1ChampionshipManager qwe = new Formula1ChampionshipManager();
 
         int noOfRecords = Formula1ChampionshipManager.driverArrayList.size();
         int noOfFields = 8;
