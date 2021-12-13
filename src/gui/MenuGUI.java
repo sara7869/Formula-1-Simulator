@@ -210,7 +210,8 @@ public class MenuGUI extends Container {
             //Randomly generate date of race
             int day = (int) (Math.random() * 30);
             int month = (int) (Math.random() * 12);
-            int year = (int) (Math.random() * 10);
+            String year = String.valueOf((int) (Math.random() * 10));
+            year = "202"+year;
             String date = year+"/"+month+"/"+day;
 
             //Add race
@@ -219,6 +220,16 @@ public class MenuGUI extends Container {
             System.out.println("Race added.");
 
             //Display race
+            RaceTable raceTable = new RaceTable();
+            raceTable.setOpaque(true);
+            JButton displayDriverTableButton = new JButton("Display Driver Table");
+
+            displayDriverTableButton.addActionListener(new DriverTableDisplay());
+
+            frame.setContentPane(raceTable);
+            frame.add(displayDriverTableButton);
+            frame.setSize(1000, 500);
+            frame.setVisible(true);
 
         }
     }
