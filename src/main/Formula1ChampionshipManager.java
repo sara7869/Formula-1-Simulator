@@ -6,6 +6,7 @@ import models.Race;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
 
@@ -19,7 +20,6 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
     static BufferedWriter bufferedWriter;
     static FileReader fileReader;
     static BufferedReader bufferedReader;
-//    public int raceCount=1;
 
     public int printMenu() {
         // The menu is displayed in the console
@@ -310,7 +310,7 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
                 formula1Driver.participatedRaceCount++;
             }
 
-            Race race = new Race(date,positions);
+            Race race = new Race(date, positions);
             raceArrayList.add(race);
             System.out.println("\nRace added.");
 
@@ -341,28 +341,64 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
             bufferedWriter.write(record);
             bufferedWriter.newLine();
         }
+
+        String divider = "----";
+        bufferedWriter.write(divider);
+        bufferedWriter.newLine();
+
+        for (Race race : raceArrayList) {
+            String[] recordArray = new String[]{
+                    race.date, race.positions[0], race.positions[1], race.positions[2], race.positions[3],
+                    race.positions[4], race.positions[5], race.positions[6], race.positions[7], race.positions[8],
+                    race.positions[9]};
+            String record = String.join(";", recordArray);
+            bufferedWriter.write(record);
+            bufferedWriter.newLine();
+        }
+
         System.out.println("Program data written to file.");
         bufferedWriter.close();
 
     }
 
-    //
     public void recoverPreviousState() throws IOException {
         Formula1Driver formula1Driver;
+        Race race;
         String[] recordArray;
+        String[] positions = new String[10];
+        Boolean dividerReached = false;
 
         try {
             fileReader = new FileReader("current_driver_information.txt");
             bufferedReader = new BufferedReader(fileReader);
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
+            String line = bufferedReader.readLine();
+            while (line != null){
+                if (line.equals("----")){
+                    dividerReached = true;
+                    break;
+                }
                 recordArray = line.split(";");
                 formula1Driver = new Formula1Driver(recordArray[0], recordArray[1], recordArray[2],
                         Integer.parseInt(recordArray[3]), Integer.parseInt(recordArray[4]),
                         Integer.parseInt(recordArray[5]), Integer.parseInt(recordArray[6]),
                         Integer.parseInt(recordArray[7]));
                 driverArrayList.add(driverArrayList.size(), formula1Driver);
+                line = bufferedReader.readLine();
             }
+            if (dividerReached = true){
+                recordArray = line.split(";");
+                String date = recordArray[0];
+                for (int count = 0; count < 10; count++) {
+                    positions = Arrays.copyOfRange(recordArray,1,10);
+                }
+                race = new Race(date,positions);
+//                formula1Driver = new Formula1Driver(recordArray[0], recordArray[1], recordArray[2],
+//                        Integer.parseInt(recordArray[3]), Integer.parseInt(recordArray[4]),
+//                        Integer.parseInt(recordArray[5]), Integer.parseInt(recordArray[6]),
+//                        Integer.parseInt(recordArray[7]));
+                raceArrayList.add(raceArrayList.size(), race);
+            }
+
             bufferedReader.close();
             displayDriverTable();
             System.out.println("\nPrevious state recovered.");
