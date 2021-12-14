@@ -25,12 +25,12 @@ public class MenuGUI extends Container {
     private JButton randomRaceWithProbabilityButton;
     private JButton displayRacesButton;
     private JButton searchButton;
-    private String[] positions = new String[10];
-    String[] startPositions = {null, null, null, null, null, null, null, null, null, null};
+    private String[] endingPositions = new String[10];
+    private String[] startPositions = {null, null, null, null, null, null, null, null, null, null};
 
     public void initialiseUI() {
 
-        frame = new JFrame("FrameExample");
+        frame = new JFrame("F1 Championship");
 
         //Create the Welcome labels
         JLabel labelWelcome = new JLabel("Welcome to the Formula 1 racing car championship.");
@@ -70,6 +70,7 @@ public class MenuGUI extends Container {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+//        frame.setSize(1000,500);
         frame.setVisible(true);
 
     }
@@ -175,7 +176,6 @@ public class MenuGUI extends Container {
     }
 
     class RandomRace implements ActionListener {
-        private boolean alreadyAdded = false;
         int index;
         Formula1Driver driver;
         int points = 12;
@@ -191,22 +191,22 @@ public class MenuGUI extends Container {
                 System.out.println("At least 10 drivers are needed to add a race. Add more and try again.");
                 return;
             }
-            //Randomly generate positions
+            //Randomly generate ending positions
             for (int count = 0; count < 10; ) {
-                alreadyAdded = false;
+                boolean alreadyAdded = false;
                 index = random.nextInt(10);
                 driver = Formula1ChampionshipManager.driverArrayList.get(index);
-                positions[count] = driver.name;
+                endingPositions[count] = driver.name;
 
                 //checking whether unique
                 for (int count2 = 0; count2 < count; count2++) {
-                    if (positions[count].equals(positions[count2])) {
+                    if (endingPositions[count].equals(endingPositions[count2])) {
                         alreadyAdded = true;
                         break;
                     }
                 }
                 if (alreadyAdded) {
-                    positions[count] = null;
+                    endingPositions[count] = null;
                 } else count++;
             }
 
@@ -218,7 +218,7 @@ public class MenuGUI extends Container {
             String date = year + "/" + month + "/" + day;
 
             //Add race
-            Race race = new Race(date, positions, startPositions);
+            Race race = new Race(date, endingPositions, startPositions);
             raceArrayList.add(race);
             System.out.println("Race added.");
 
@@ -276,27 +276,41 @@ public class MenuGUI extends Container {
     }
 
     class RandomRaceWithProbability implements ActionListener {
-        private boolean alreadyAdded = false;
+        int index;
+        Formula1Driver driver;
+        int points = 12;
+        String driverName;
 
         public void actionPerformed(ActionEvent e) {
+            Random random = new Random();
             //Check if at least 10 drivers have been added
             if (Formula1ChampionshipManager.driverArrayList.size() < 10) {
                 System.out.println("At least 10 drivers are needed to add a race. Add more and try again.");
                 return;
             }
-            //Randomly generate positions
-//            for (int count = 0; count < 9; count++) {
-//                index[count] = (int) (Math.random() * Formula1ChampionshipManager.driverArrayList.size());
-//                for (int count2 = 0; count2 < count; count2++) {
-//                    if (index[count] == index[count2]) {
-//                        alreadyAdded = true;
-//                        break;
-//                    }
-//                }
-//                if (!alreadyAdded) {
-//                    positions[count] = Formula1ChampionshipManager.driverArrayList.get(index[count]).name;
-//                }
-//            }
+            //Randomly generate starting positions
+            for (int count = 0; count < 10; ) {
+                boolean alreadyAdded = false;
+                index = random.nextInt(10);
+                driver = Formula1ChampionshipManager.driverArrayList.get(index);
+                startPositions[count] = driver.name;
+
+                //checking whether unique
+                for (int count2 = 0; count2 < count; count2++) {
+                    if (startPositions[count].equals(startPositions[count2])) {
+                        alreadyAdded = true;
+                        break;
+                    }
+                }
+                if (alreadyAdded) {
+                    startPositions[count] = null;
+                } else count++;
+            }
+
+            //Use probabilities to calculate ending positions
+            for (int count = 0; count < 10; count++) {
+
+            }
 
             //Randomly generate date of race
             int day = (int) (Math.random() * 30);
@@ -306,9 +320,46 @@ public class MenuGUI extends Container {
             String date = year + "/" + month + "/" + day;
 
             //Add race
-            Race race = new Race(date, positions, startPositions);
+            Race race = new Race(date, endingPositions, startPositions);
             raceArrayList.add(race);
             System.out.println("Race added.");
+
+            //Update points, race counts and participation counts
+            for (int driverCount = 0; driverCount < 10; driverCount++) {
+                driverName = race.endPositions[driverCount];
+                for (Formula1Driver formula1Driver : driverArrayList) {
+                    if (formula1Driver.name.equals(driverName)) {
+                        driver = formula1Driver;
+                        break;
+                    }
+                }
+
+                switch (driverCount) {
+                    case 0 -> {
+                        points = 25;
+                        driver.firstPositionCount++;
+                    }
+                    case 1 -> {
+                        points = 18;
+                        driver.secondPositionCount++;
+                    }
+                    case 2 -> {
+                        points = 15;
+                        driver.thirdPositionCount++;
+                    }
+                    case 3 -> points = 12;
+                    case 4 -> points = 10;
+                    case 5 -> points = 8;
+                    case 6 -> points = 6;
+                    case 7 -> points = 4;
+                    case 8 -> points = 2;
+                    case 9 -> points = 1;
+                    default -> throw new IllegalStateException("Unexpected value: " + driverCount);
+                }
+
+                driver.totalPoints = driver.totalPoints + points;
+                driver.participatedRaceCount++;
+            }
 
             //Display race
             RaceTable raceTable = new RaceTable();
@@ -322,7 +373,6 @@ public class MenuGUI extends Container {
             frame.setSize(1000, 500);
             frame.setVisible(true);
 
-
         }
     }
 
@@ -332,20 +382,17 @@ public class MenuGUI extends Container {
             Collections.sort(raceArrayList, new ComparatorRaceDatesAscending());
             RaceTable raceTable = new RaceTable();
             raceTable.setOpaque(true);
-//            JButton backButton = new JButton("Back to menu");
-//            backButton.addActionListener(new BackToMenu());
-
             frame.setContentPane(raceTable);
-//            frame.add(backButton);
             frame.setSize(1000, 500);
             frame.setVisible(true);
         }
     }
 
-    static class Search implements ActionListener {
+    class Search implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+//            SearchGUI searchGUI = new SearchGUI(frame);
 
         }
     }
