@@ -1,8 +1,8 @@
 package gui;
 
-import main.Formula1ChampionshipManager;
-
 import javax.swing.*;
+
+import static main.Formula1ChampionshipManager.raceArrayList;
 
 public class RaceTable extends JPanel {
     RaceTable() {
@@ -18,26 +18,22 @@ public class RaceTable extends JPanel {
                 "Position9",
                 "Position10"};
 
-//        Formula1ChampionshipManager qwe = new Formula1ChampionshipManager();
-
-        int noOfRecords = Formula1ChampionshipManager.raceArrayList.size();
+        int noOfRecords = raceArrayList.size();
         Object[][] data = new Object[noOfRecords][11];
 
-//        int count = Formula1ChampionshipManager.raceArrayList.size() - 1;
-        for (int count = 0; count < Formula1ChampionshipManager.raceArrayList.size(); count++) {
+        for (int count = 0; count < raceArrayList.size()-1; count++) {
             var record = new Object[]{
-//                Formula1ChampionshipManager.raceArrayList.get(count)
-                    Formula1ChampionshipManager.raceArrayList.get(count).date,
-                    Formula1ChampionshipManager.raceArrayList.get(count).positions[0],
-                    Formula1ChampionshipManager.raceArrayList.get(count).positions[1],
-                    Formula1ChampionshipManager.raceArrayList.get(count).positions[2],
-                    Formula1ChampionshipManager.raceArrayList.get(count).positions[3],
-                    Formula1ChampionshipManager.raceArrayList.get(count).positions[4],
-                    Formula1ChampionshipManager.raceArrayList.get(count).positions[5],
-                    Formula1ChampionshipManager.raceArrayList.get(count).positions[6],
-                    Formula1ChampionshipManager.raceArrayList.get(count).positions[7],
-                    Formula1ChampionshipManager.raceArrayList.get(count).positions[8],
-                    Formula1ChampionshipManager.raceArrayList.get(count).positions[9]};
+                    raceArrayList.get(count).date,
+                    raceArrayList.get(count).endPositions[0],
+                    raceArrayList.get(count).endPositions[1],
+                    raceArrayList.get(count).endPositions[2],
+                    raceArrayList.get(count).endPositions[3],
+                    raceArrayList.get(count).endPositions[4],
+                    raceArrayList.get(count).endPositions[5],
+                    raceArrayList.get(count).endPositions[6],
+                    raceArrayList.get(count).endPositions[7],
+                    raceArrayList.get(count).endPositions[8],
+                    raceArrayList.get(count).endPositions[9]};
             data[count] = record;
         }
 

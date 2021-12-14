@@ -1,9 +1,8 @@
 package gui;
 
-import main.Formula1ChampionshipManager;
-
 import javax.swing.*;
-import javax.swing.table.*;
+
+import static main.Formula1ChampionshipManager.driverArrayList;
 
 public class DriverTable extends JPanel {
 //    JFrame frame = new JFrame();
@@ -19,22 +18,20 @@ public class DriverTable extends JPanel {
                 "Total Points",
                 "Participated Races Count"};
 
-//        Formula1ChampionshipManager qwe = new Formula1ChampionshipManager();
-
-        int noOfRecords = Formula1ChampionshipManager.driverArrayList.size();
+        int noOfRecords = driverArrayList.size();
         int noOfFields = 8;
         Object[][] data = new Object[noOfRecords][noOfFields];
 
-        for (int count = 0; count < Formula1ChampionshipManager.driverArrayList.size(); count++) {
+        for (int count = 0; count < driverArrayList.size(); count++) {
             var record = new Object[]{
-                    Formula1ChampionshipManager.driverArrayList.get(count).name,
-                    Formula1ChampionshipManager.driverArrayList.get(count).team,
-                    Formula1ChampionshipManager.driverArrayList.get(count).location,
-                    Formula1ChampionshipManager.driverArrayList.get(count).firstPositionCount,
-                    Formula1ChampionshipManager.driverArrayList.get(count).secondPositionCount,
-                    Formula1ChampionshipManager.driverArrayList.get(count).thirdPositionCount,
-                    Formula1ChampionshipManager.driverArrayList.get(count).totalPoints,
-                    Formula1ChampionshipManager.driverArrayList.get(count).totalPoints};
+                    driverArrayList.get(count).name,
+                    driverArrayList.get(count).team,
+                    driverArrayList.get(count).location,
+                    driverArrayList.get(count).firstPositionCount,
+                    driverArrayList.get(count).secondPositionCount,
+                    driverArrayList.get(count).thirdPositionCount,
+                    driverArrayList.get(count).totalPoints,
+                    driverArrayList.get(count).totalPoints};
             data[count] = record;
         }
         JTable table = new JTable(data, columnNames);
