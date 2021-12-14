@@ -20,6 +20,7 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
     static BufferedWriter bufferedWriter;
     static FileReader fileReader;
     static BufferedReader bufferedReader;
+    String startPositions[]={null,null,null,null,null,null,null,null,null,null};
 
     public int printMenu() {
         // The menu is displayed in the console
@@ -310,7 +311,7 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
                 formula1Driver.participatedRaceCount++;
             }
 
-            Race race = new Race(date, positions);
+            Race race = new Race(date, positions, startPositions);
             raceArrayList.add(race);
             System.out.println("\nRace added.");
 
@@ -348,9 +349,9 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
 
         for (Race race : raceArrayList) {
             String[] recordArray = new String[]{
-                    race.date, race.positions[0], race.positions[1], race.positions[2], race.positions[3],
-                    race.positions[4], race.positions[5], race.positions[6], race.positions[7], race.positions[8],
-                    race.positions[9]};
+                    race.date, race.endPositions[0], race.endPositions[1], race.endPositions[2], race.endPositions[3],
+                    race.endPositions[4], race.endPositions[5], race.endPositions[6], race.endPositions[7], race.endPositions[8],
+                    race.endPositions[9]};
             String record = String.join(";", recordArray);
             bufferedWriter.write(record);
             bufferedWriter.newLine();
@@ -391,11 +392,7 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
                 for (int count = 0; count < 10; count++) {
                     positions = Arrays.copyOfRange(recordArray,1,10);
                 }
-                race = new Race(date,positions);
-//                formula1Driver = new Formula1Driver(recordArray[0], recordArray[1], recordArray[2],
-//                        Integer.parseInt(recordArray[3]), Integer.parseInt(recordArray[4]),
-//                        Integer.parseInt(recordArray[5]), Integer.parseInt(recordArray[6]),
-//                        Integer.parseInt(recordArray[7]));
+                race = new Race(date,positions, startPositions);
                 raceArrayList.add(raceArrayList.size(), race);
             }
 

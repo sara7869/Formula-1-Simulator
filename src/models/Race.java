@@ -2,10 +2,12 @@ package models;
 
 public class Race {
     public String date;
-    public String[] positions = new String[10];
+    public String[] endPositions;
+    public String[] startPositions;
 
-    public Race(String dateOfRace, String[] positionsOfRace) {
+    public Race(String dateOfRace, String[] endPositionsOfRace, String[] startPositionsOfRace) {
         date = dateOfRace;
-        positions = positionsOfRace;
+        endPositions = endPositionsOfRace;
+        startPositions = startPositionsOfRace;
     }
 }

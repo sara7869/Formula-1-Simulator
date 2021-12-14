@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Collections;
+import java.util.*;
 
 import static main.Formula1ChampionshipManager.raceArrayList;
 
@@ -24,6 +24,7 @@ public class MenuGUI extends Container {
     private JButton searchButton;
     private String[] positions = new String[10];
     private int[] index = new int[10];
+    String startPositions[]={null,null,null,null,null,null,null,null,null,null};
 
     public void initialiseUI() {
 
@@ -140,7 +141,7 @@ public class MenuGUI extends Container {
     class PointSort implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Collections.sort(Formula1ChampionshipManager.driverArrayList, new comparePointsAscending());
+            Collections.sort(Formula1ChampionshipManager.driverArrayList, new ComparatorPointsAscending());
             DriverTable newContentPane = new DriverTable();
             newContentPane.setOpaque(true); // content panes must be opaque
             JButton backButton = new JButton("Back to menu");
@@ -157,7 +158,7 @@ public class MenuGUI extends Container {
     class FirstPositionSort implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Collections.sort(Formula1ChampionshipManager.driverArrayList, new compareFirstPositionsDescending());
+            Collections.sort(Formula1ChampionshipManager.driverArrayList, new ComparatorFirstPositionsDescending());
             DriverTable newContentPane = new DriverTable();
             newContentPane.setOpaque(true); // content panes must be opaque
             JButton backButton = new JButton("Back to menu");
@@ -184,18 +185,31 @@ public class MenuGUI extends Container {
                 return;
             }
             //Randomly generate positions
-            for (int count = 0; count < 9; count++) {
-                index[count] = (int) (Math.random() * Formula1ChampionshipManager.driverArrayList.size());
+            for (int count = 0; count < 10; count++) {
+//                index[count] = (int) (Math.random() * Formula1ChampionshipManager.driverArrayList.size());
+//                random.nextInt(max + min) + min;
+                int index = (int) (Math.random() * 10);
+                positions[count] = Formula1ChampionshipManager.driverArrayList.get(index).name;
+
+                //checking whether unique
                 for (int count2 = 0; count2 < count; count2++) {
-                    if (index[count] == index[count2]) {
+//                    if (index[count] == index[count2]) {
+                    if (positions[count] == positions[count2]) {
                         alreadyAdded = true;
                         break;
                     }
                 }
-                if (!alreadyAdded) {
-                    positions[count] = Formula1ChampionshipManager.driverArrayList.get(index[count]).name;
+//                if (!alreadyAdded) {
+//                    positions[count] = Formula1ChampionshipManager.driverArrayList.get(index[count]).name;
+//                }
+//                else {
+//                    index[count]= 0;
+//                }
+                if (alreadyAdded) {
+                    positions[count] = null;
                 }
             }
+
 
             //Randomly generate date of race
             int day = (int) (Math.random() * 30);
@@ -205,7 +219,7 @@ public class MenuGUI extends Container {
             String date = year + "/" + month + "/" + day;
 
             //Add race
-            Race race = new Race(date, positions);
+            Race race = new Race(date, positions, startPositions);
             raceArrayList.add(race);
             System.out.println("Race added.");
 
@@ -255,7 +269,7 @@ public class MenuGUI extends Container {
             String date = year + "/" + month + "/" + day;
 
             //Add race
-            Race race = new Race(date, positions);
+            Race race = new Race(date, positions, startPositions);
             raceArrayList.add(race);
             System.out.println("Race added.");
 
