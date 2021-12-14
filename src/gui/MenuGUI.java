@@ -308,15 +308,63 @@ public class MenuGUI extends Container {
                 } else count++;
             }
 
-            //Use probabilities to calculate ending positions
-            for (int count = 0; count < 10; count++) {
+            //Use probabilities to find 1st place winner
+            int winnerIndex = random.nextInt(100);
+            if (winnerIndex<=40){
+                endingPositions[0] = startPositions[0];
+            }
+            else if (winnerIndex<=70){
+                endingPositions[0] = startPositions[1];
+            }
+            else if (winnerIndex<=80){
+                endingPositions[0] = startPositions[3];
+            }
+            else if (winnerIndex<=90){
+                endingPositions[0] = startPositions[4];
+            }
+            else if (winnerIndex<=92){
+                endingPositions[0] = startPositions[5];
+            }
+            else if (winnerIndex<=94){
+                endingPositions[0] = startPositions[6];
+            }
+            else if (winnerIndex<=96){
+                endingPositions[0] = startPositions[7];
+            }
+            else if (winnerIndex<=98){
+                endingPositions[0] = startPositions[8];
+            }
+            else {
+                endingPositions[0] = startPositions[9];
+            }
+            //Finding the other ending positions
+            for (int count = 1; count < 10; ) {
+                boolean alreadyAdded = false;
+                index = random.nextInt(10);
+                driver = Formula1ChampionshipManager.driverArrayList.get(index);
+                endingPositions[count] = driver.name;
 
+                //checking whether unique
+                for (int count2 = 0; count2 < count; count2++) {
+                    if (endingPositions[count].equals(endingPositions[count2])) {
+                        alreadyAdded = true;
+                        break;
+                    }
+                }
+                if (alreadyAdded) {
+                    endingPositions[count] = null;
+                } else count++;
+            }
+
+            System.out.println("Starting positions that were generated:");
+            for (int count=0; count<10;count++){
+                System.out.println(count+" : "+startPositions[count]);
             }
 
             //Randomly generate date of race
-            int day = (int) (Math.random() * 30);
-            int month = (int) (Math.random() * 12);
-            String year = String.valueOf((int) (Math.random() * 10));
+            int day = random.nextInt(30);
+            int month = random.nextInt(12);
+            String year = String.valueOf(random.nextInt(10));
             year = "202" + year;
             String date = year + "/" + month + "/" + day;
 
