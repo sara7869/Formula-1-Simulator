@@ -20,7 +20,7 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
     static BufferedWriter bufferedWriter;
     static FileReader fileReader;
     static BufferedReader bufferedReader;
-    String startPositions[]={null,null,null,null,null,null,null,null,null,null};
+    String startPositions[] = {null, null, null, null, null, null, null, null, null, null};
 
     public int printMenu() {
         // The menu is displayed in the console
@@ -208,7 +208,7 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
     }
 
     public void displayDriverTable() {
-        Collections.sort(driverArrayList, new comparePointsDescending());
+        Collections.sort(driverArrayList, new ComparatorPointsDescending());
         System.out.println(
                 "\nName\t|\tTeam\t|\tLocation\t|\tFirst Positions\t|\tSecond Positions\t|\tThird Positions\t|\tTotal Points\t|\tParticipated Races");
         for (Formula1Driver formula1Driver : driverArrayList) {
@@ -373,8 +373,8 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
             fileReader = new FileReader("current_driver_information.txt");
             bufferedReader = new BufferedReader(fileReader);
             String line = bufferedReader.readLine();
-            while (line != null){
-                if (line.equals("----")){
+            while (line != null) {
+                if (line.equals("----")) {
                     dividerReached = true;
                     break;
                 }
@@ -386,14 +386,17 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
                 driverArrayList.add(driverArrayList.size(), formula1Driver);
                 line = bufferedReader.readLine();
             }
-            if (dividerReached = true){
-                recordArray = line.split(";");
-                String date = recordArray[0];
-                for (int count = 0; count < 10; count++) {
-                    positions = Arrays.copyOfRange(recordArray,1,10);
+            if (dividerReached) {
+                line = bufferedReader.readLine();
+                while (line != null) {
+                    recordArray = line.split(";");
+                    String date = recordArray[0];
+                    positions = Arrays.copyOfRange(recordArray, 1, 11);
+
+                    race = new Race(date, positions, startPositions);
+                    raceArrayList.add(race);
+                    line = bufferedReader.readLine();
                 }
-                race = new Race(date,positions, startPositions);
-                raceArrayList.add(raceArrayList.size(), race);
             }
 
             bufferedReader.close();

@@ -1,10 +1,14 @@
 package gui;
 
+import models.Race;
+
 import javax.swing.*;
 
 import static main.Formula1ChampionshipManager.raceArrayList;
 
 public class RaceTable extends JPanel {
+    Race race;
+
     RaceTable() {
         String[] columnNames = {"Date",
                 "Position1",
@@ -21,19 +25,20 @@ public class RaceTable extends JPanel {
         int noOfRecords = raceArrayList.size();
         Object[][] data = new Object[noOfRecords][11];
 
-        for (int count = 0; count < raceArrayList.size()-1; count++) {
+        for (int count = 0; count < raceArrayList.size(); count++) {
+            race = raceArrayList.get(count);
             var record = new Object[]{
-                    raceArrayList.get(count).date,
-                    raceArrayList.get(count).endPositions[0],
-                    raceArrayList.get(count).endPositions[1],
-                    raceArrayList.get(count).endPositions[2],
-                    raceArrayList.get(count).endPositions[3],
-                    raceArrayList.get(count).endPositions[4],
-                    raceArrayList.get(count).endPositions[5],
-                    raceArrayList.get(count).endPositions[6],
-                    raceArrayList.get(count).endPositions[7],
-                    raceArrayList.get(count).endPositions[8],
-                    raceArrayList.get(count).endPositions[9]};
+                    race.date,
+                    race.endPositions[0],
+                    race.endPositions[1],
+                    race.endPositions[2],
+                    race.endPositions[3],
+                    race.endPositions[4],
+                    race.endPositions[5],
+                    race.endPositions[6],
+                    race.endPositions[7],
+                    race.endPositions[8],
+                    race.endPositions[9]};
             data[count] = record;
         }
 

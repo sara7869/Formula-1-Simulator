@@ -31,7 +31,7 @@ public class DriverTable extends JPanel {
                     driverArrayList.get(count).secondPositionCount,
                     driverArrayList.get(count).thirdPositionCount,
                     driverArrayList.get(count).totalPoints,
-                    driverArrayList.get(count).totalPoints};
+                    driverArrayList.get(count).participatedRaceCount};
             data[count] = record;
         }
         JTable table = new JTable(data, columnNames);
