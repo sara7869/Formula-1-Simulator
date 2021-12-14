@@ -27,7 +27,7 @@ public class RaceTable extends JPanel {
 
         for (int count = 0; count < raceArrayList.size(); count++) {
             race = raceArrayList.get(count);
-            var record = new Object[]{
+            Object[] record = new Object[]{
                     race.date,
                     race.endPositions[0],
                     race.endPositions[1],

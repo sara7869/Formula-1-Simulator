@@ -27,6 +27,7 @@ public class MenuGUI extends Container {
     private JButton searchButton;
     private String[] endingPositions = new String[10];
     private String[] startPositions = {null, null, null, null, null, null, null, null, null, null};
+    protected static JTextField textField;
 
     public void initialiseUI() {
 
@@ -389,10 +390,29 @@ public class MenuGUI extends Container {
     }
 
     class Search implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JLabel label = new JLabel("Enter driver name: ");
+            // create a field with 25 chars width
+            textField = new JTextField(25);
+            JButton button = new JButton("Search");
+            button.addActionListener(new DisplaySearchResultTable());
+
+            frame.add(label);
+            frame.add(textField);
+            frame.add(button);
+            frame.setSize(800, 350);
+        }
+    }
+
+    class DisplaySearchResultTable extends JPanel implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            SearchGUI searchGUI = new SearchGUI(frame);
+            SearchResultTable searchResultTable = new SearchResultTable();
+            searchResultTable.setOpaque(true);
+            frame.setContentPane(searchResultTable);
+            frame.setVisible(true);
 
         }
     }

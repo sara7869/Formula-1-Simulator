@@ -3,12 +3,12 @@ Aa;ww;ggr;12;4;7;115;16
 Zb;ww;ggr;3;4;7;90;14
 Sd;fr;het;2;24;8;72;55
 Az;t;rb;4;7;2;68;13
+Df;fa;tg;5;44;4;47;35
 Lk;ki;ehh;5;11;7;51;18
 Gt;we;sfd;1;22;5;49;2
-Df;fa;tg;5;44;4;47;35
-PO;ko;wrt;7;13;4;20;14
 Yu;sd;hty;4;55;23;19;11
-Er;hu;juk;5;34;11;13;16
+PO;ko;wrt;7;13;4;20;14
+Er;hu;juk;5;34;11;13;2
 ----
 2021/05/23;Aa;Az;Gt;Sd;PO;Yu;Lk;Er;Df;Zz
 2021/02/11;Er;Gt;Az;Sd;Zz;Df;Lk;Aa;PO;Yu
