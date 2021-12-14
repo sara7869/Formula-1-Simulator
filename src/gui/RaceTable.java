@@ -48,16 +48,6 @@ public class RaceTable extends JPanel {
         JScrollPane scrollPane = new JScrollPane(table);
         // Add the scroll pane to this panel.
         add(scrollPane);
-//        TableColumnModel columnModel = table.getColumnModel();
-//        columnModel.getColumn(0).setPreferredWidth(100);
-//        columnModel.getColumn(1).setPreferredWidth(200);
-//        columnModel.getColumn(2).setPreferredWidth(100);
-//        columnModel.getColumn(3).setPreferredWidth(300);
-//        columnModel.getColumn(4).setPreferredWidth(600);
-//        columnModel.getColumn(5).setPreferredWidth(600);
-//        columnModel.getColumn(6).setPreferredWidth(600);
-//        columnModel.getColumn(7).setPreferredWidth(300);
-//        table.setSize(2000,400);
 
     }
 }

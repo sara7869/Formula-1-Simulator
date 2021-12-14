@@ -13,15 +13,16 @@ import java.util.Scanner;
 public class Formula1ChampionshipManager implements ChampionshipManager {
 
     static Scanner scanner = new Scanner(System.in);
-    private String[] positions = new String[10];
-    public static ArrayList<Formula1Driver> driverArrayList = new ArrayList<Formula1Driver>();
-    public static ArrayList<Race> raceArrayList = new ArrayList<Race>();
+    private final String[] positions = new String[10];
+    public static ArrayList<Formula1Driver> driverArrayList = new ArrayList<>();
+    public static ArrayList<Race> raceArrayList = new ArrayList<>();
     static FileWriter fileWriter;
     static BufferedWriter bufferedWriter;
     static FileReader fileReader;
     static BufferedReader bufferedReader;
-    String startPositions[] = {null, null, null, null, null, null, null, null, null, null};
+    String[] startPositions = {null, null, null, null, null, null, null, null, null, null};
 
+    //Display menu
     public int printMenu() {
         // The menu is displayed in the console
 
@@ -46,10 +47,11 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
         return scanner.nextInt();
     }
 
+    //Add driver to the championship
     public void addDriver() {
         Formula1Driver formula1Driver;
         boolean driverAdded = false;
-        String inputInfoCorrect = "N";
+        String inputInfoCorrect;
         String driverToBeAdded = "Y";
         String name = "";
         String team = "";
@@ -101,12 +103,12 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
                 count1 = count1 + 1;
             }
 
-            for (int count = 0; count < (driverArrayList.size()); count++) {
-                if (driverArrayList.get(count).name == name) {
+            for (Formula1Driver driver : driverArrayList) {
+                if (driver.name.equals(name)) {
                     System.out.println("\nThis driver has already been added to the championship.");
                     driverAdded = false;
                 } else {
-                    if (driverArrayList.get(count).team == team) {
+                    if (driver.team.equals(team)) {
                         System.out.println("\nThis team/manufacturer already has another driver.");
                     }
                 }
@@ -118,7 +120,7 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
 
             displayDriverTable();
 
-            if (driverAdded == false) {
+            if (!driverAdded) {
                 System.out.println("\nDo you want to add another driver? Press Y if yes or N if no.");
                 driverToBeAdded = scanner.nextLine();
             }
@@ -127,6 +129,7 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
 
     }
 
+    //Delete driver from the championship
     public void deleteDriver() {
         String driverName;
         boolean driverRemoved = false;
@@ -156,6 +159,7 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
         }
     }
 
+    //Change driver for a team/manufacturer
     public void changeDriver() {
         String team;
         String driverTeam;
@@ -165,12 +169,12 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
         System.out.println("\nEnter the team/manufacturer you want to change the driver for:");
         scanner.nextLine();
         team = scanner.nextLine();
-        for (int count = 0; count < driverArrayList.size(); count++) {
-            driverTeam = driverArrayList.get(count).team;
+        for (Formula1Driver formula1Driver : driverArrayList) {
+            driverTeam = formula1Driver.team;
             if (driverTeam.equals(team)) {
                 System.out.println("Enter the name of the new driver.");
                 name = scanner.nextLine();
-                driverArrayList.get(count).name = name;
+                formula1Driver.name = name;
                 driverRemoved = true;
                 System.out.println("Driver has been changed for team " + team);
                 displayDriverTable();
@@ -182,6 +186,7 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
 
     }
 
+    //Display driver statistics
     public void displayStatistics() {
         if (driverArrayList.size() == 0) {
             System.out.println("There are no added drivers.");
@@ -207,6 +212,7 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
 
     }
 
+    //Display all the drivers' information
     public void displayDriverTable() {
         Collections.sort(driverArrayList, new ComparatorPointsDescending());
         System.out.println(
@@ -220,6 +226,7 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
 
     }
 
+    //Add race
     public void addRace() {
         String date = "";
         int count;
@@ -322,12 +329,14 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
 
     }
 
+    //Initialise positions
     private void initialisePositions() {
         for (int count = 0; count < 9; count++) {
             positions[count] = "";
         }
     }
 
+    //Save all the information to a text file
     public void saveInfoToFile() throws IOException {
         fileWriter = new FileWriter("current_driver_information.txt");
         bufferedWriter = new BufferedWriter(fileWriter);
@@ -362,12 +371,13 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
 
     }
 
+    //Recover all the information saved in the text file
     public void recoverPreviousState() throws IOException {
         Formula1Driver formula1Driver;
         Race race;
         String[] recordArray;
         String[] positions = new String[10];
-        Boolean dividerReached = false;
+        boolean dividerReached = false;
 
         try {
             fileReader = new FileReader("current_driver_information.txt");
@@ -404,7 +414,6 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
             System.out.println("\nPrevious state recovered.");
         } catch (FileNotFoundException e) {
             System.out.println("The file does not exist.");
-            return;
         }
     }
 
