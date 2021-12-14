@@ -1,14 +1,17 @@
 package gui;
 
 import main.Formula1ChampionshipManager;
+import models.Formula1Driver;
 import models.Race;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
+import java.util.Collections;
+import java.util.Random;
 
+import static main.Formula1ChampionshipManager.driverArrayList;
 import static main.Formula1ChampionshipManager.raceArrayList;
 
 public class MenuGUI extends Container {
@@ -23,8 +26,7 @@ public class MenuGUI extends Container {
     private JButton displayRacesButton;
     private JButton searchButton;
     private String[] positions = new String[10];
-    private int[] index = new int[10];
-    String startPositions[]={null,null,null,null,null,null,null,null,null,null};
+    String[] startPositions = {null, null, null, null, null, null, null, null, null, null};
 
     public void initialiseUI() {
 
@@ -174,42 +176,39 @@ public class MenuGUI extends Container {
 
     class RandomRace implements ActionListener {
         private boolean alreadyAdded = false;
+        int index;
+        Formula1Driver driver;
+        int points = 12;
+        String driverName;
 
         /**
          * @param e
          */
         public void actionPerformed(ActionEvent e) {
+            Random random = new Random();
             //Check if at least 10 drivers have been added
             if (Formula1ChampionshipManager.driverArrayList.size() < 10) {
                 System.out.println("At least 10 drivers are needed to add a race. Add more and try again.");
                 return;
             }
             //Randomly generate positions
-            for (int count = 0; count < 10; count++) {
-//                index[count] = (int) (Math.random() * Formula1ChampionshipManager.driverArrayList.size());
-//                random.nextInt(max + min) + min;
-                int index = (int) (Math.random() * 10);
-                positions[count] = Formula1ChampionshipManager.driverArrayList.get(index).name;
+            for (int count = 0; count < 10; ) {
+                alreadyAdded = false;
+                index = random.nextInt(10);
+                driver = Formula1ChampionshipManager.driverArrayList.get(index);
+                positions[count] = driver.name;
 
                 //checking whether unique
                 for (int count2 = 0; count2 < count; count2++) {
-//                    if (index[count] == index[count2]) {
-                    if (positions[count] == positions[count2]) {
+                    if (positions[count].equals(positions[count2])) {
                         alreadyAdded = true;
                         break;
                     }
                 }
-//                if (!alreadyAdded) {
-//                    positions[count] = Formula1ChampionshipManager.driverArrayList.get(index[count]).name;
-//                }
-//                else {
-//                    index[count]= 0;
-//                }
                 if (alreadyAdded) {
                     positions[count] = null;
-                }
+                } else count++;
             }
-
 
             //Randomly generate date of race
             int day = (int) (Math.random() * 30);
@@ -222,6 +221,44 @@ public class MenuGUI extends Container {
             Race race = new Race(date, positions, startPositions);
             raceArrayList.add(race);
             System.out.println("Race added.");
+
+            //Update points, race counts and participation counts
+            for (int driverCount = 0; driverCount < 10; driverCount++) {
+                driverName = race.endPositions[driverCount];
+                for (Formula1Driver formula1Driver : driverArrayList) {
+                    if (formula1Driver.name.equals(driverName)) {
+                        driver = formula1Driver;
+                        break;
+                    }
+                }
+
+                switch (driverCount) {
+                    case 0 -> {
+                        points = 25;
+                        driver.firstPositionCount++;
+                    }
+                    case 1 -> {
+                        points = 18;
+                        driver.secondPositionCount++;
+                    }
+                    case 2 -> {
+                        points = 15;
+                        driver.thirdPositionCount++;
+                    }
+                    case 3 -> points = 12;
+                    case 4 -> points = 10;
+                    case 5 -> points = 8;
+                    case 6 -> points = 6;
+                    case 7 -> points = 4;
+                    case 8 -> points = 2;
+                    case 9 -> points = 1;
+                    default -> throw new IllegalStateException("Unexpected value: " + driverCount);
+                }
+
+                driver.totalPoints = driver.totalPoints + points;
+                driver.participatedRaceCount++;
+            }
+
 
             //Display race
             RaceTable raceTable = new RaceTable();
@@ -248,18 +285,18 @@ public class MenuGUI extends Container {
                 return;
             }
             //Randomly generate positions
-            for (int count = 0; count < 9; count++) {
-                index[count] = (int) (Math.random() * Formula1ChampionshipManager.driverArrayList.size());
-                for (int count2 = 0; count2 < count; count2++) {
-                    if (index[count] == index[count2]) {
-                        alreadyAdded = true;
-                        break;
-                    }
-                }
-                if (!alreadyAdded) {
-                    positions[count] = Formula1ChampionshipManager.driverArrayList.get(index[count]).name;
-                }
-            }
+//            for (int count = 0; count < 9; count++) {
+//                index[count] = (int) (Math.random() * Formula1ChampionshipManager.driverArrayList.size());
+//                for (int count2 = 0; count2 < count; count2++) {
+//                    if (index[count] == index[count2]) {
+//                        alreadyAdded = true;
+//                        break;
+//                    }
+//                }
+//                if (!alreadyAdded) {
+//                    positions[count] = Formula1ChampionshipManager.driverArrayList.get(index[count]).name;
+//                }
+//            }
 
             //Randomly generate date of race
             int day = (int) (Math.random() * 30);
@@ -292,6 +329,7 @@ public class MenuGUI extends Container {
     class RaceDisplay implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            Collections.sort(raceArrayList, new ComparatorRaceDatesAscending());
             RaceTable raceTable = new RaceTable();
             raceTable.setOpaque(true);
 //            JButton backButton = new JButton("Back to menu");
