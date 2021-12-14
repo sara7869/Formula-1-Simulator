@@ -392,7 +392,7 @@ public class MenuGUI extends Container {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-//            SearchGUI searchGUI = new SearchGUI(frame);
+            SearchGUI searchGUI = new SearchGUI(frame);
 
         }
     }
