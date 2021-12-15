@@ -216,12 +216,13 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
     public void displayDriverTable() {
         Collections.sort(driverArrayList, new ComparatorPointsDescending());
         System.out.println(
-                "\nName\t|\tTeam\t|\tLocation\t|\tFirst Positions\t|\tSecond Positions\t|\tThird Positions\t|\tTotal Points\t|\tParticipated Races");
+                "\nName\t|\tTeam\t|\tLocation\t|First Positions|Second Positions|Third Positions|Total Points|Participated Races");
         for (Formula1Driver formula1Driver : driverArrayList) {
-            System.out.println(formula1Driver.name + "\t|\t" + formula1Driver.team + "\t|\t" + formula1Driver.location
-                               + "\t|\t" + formula1Driver.firstPositionCount + "\t|\t" + formula1Driver.secondPositionCount
-                               + "\t|\t" + formula1Driver.thirdPositionCount + "\t|\t" + formula1Driver.totalPoints + "\t|\t"
-                               + formula1Driver.participatedRaceCount);
+            System.out.println(formula1Driver.name + "\t|\t" + formula1Driver.team + "\t|\t" +
+                               formula1Driver.location + "\t|\t\t" + formula1Driver.firstPositionCount +
+                               "\t\t|\t\t" + formula1Driver.secondPositionCount + "\t\t|\t\t" +
+                               formula1Driver.thirdPositionCount + "\t\t|\t\t" + formula1Driver.totalPoints
+                               + "\t\t|\t\t" + formula1Driver.participatedRaceCount);
         }
 
     }
