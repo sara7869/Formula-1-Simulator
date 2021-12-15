@@ -38,7 +38,6 @@ public class MenuGUI extends Container {
         menuButtons.buttons(container);
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.pack();
-//        frame.setSize(1000,500);
         frame.setVisible(true);
 
     }
@@ -370,7 +369,7 @@ public class MenuGUI extends Container {
             frame.add(label);
             frame.add(textField);
             frame.add(button);
-            frame.setSize(800, 350);
+            frame.pack();
         }
     }
 
@@ -381,7 +380,7 @@ public class MenuGUI extends Container {
             searchResultTable.setOpaque(true);
             frame.setContentPane(searchResultTable);
             frame.setVisible(true);
-
+            frame.pack();
         }
     }
 }
