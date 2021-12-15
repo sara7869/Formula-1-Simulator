@@ -8,6 +8,7 @@ public class DriverTable extends JPanel {
     Object[] record;
 
     DriverTable() {
+        //Names of columns
         String[] columnNames = {"Name",
                 "Team",
                 "Location",
@@ -21,6 +22,7 @@ public class DriverTable extends JPanel {
         int noOfFields = 8;
         Object[][] data = new Object[noOfRecords][noOfFields];
 
+        //Add records to data
         for (int count = 0; count < driverArrayList.size(); count++) {
             record = new Object[]{
                     driverArrayList.get(count).name,
@@ -33,6 +35,8 @@ public class DriverTable extends JPanel {
                     driverArrayList.get(count).participatedRaceCount};
             data[count] = record;
         }
+
+        //Create a table and add the columns and the data
         JTable table = new JTable(data, columnNames);
         table.setFillsViewportHeight(true);
         // Create the scroll pane and add the table to it.

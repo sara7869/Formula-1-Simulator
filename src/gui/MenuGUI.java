@@ -23,6 +23,7 @@ public class MenuGUI extends Container {
     private final String[] startPositions = {null, null, null, null, null, null, null, null, null, null};
     protected static JTextField textField;
 
+    //Initialise the UI
     public void initialiseUI() {
 
         frame = new JFrame("F1 Championship");
@@ -39,9 +40,9 @@ public class MenuGUI extends Container {
         frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-
     }
 
+    //Add the menu buttons
     class MenuButtons {
         public void buttons(Container container) {
             JButton displayDriverTableButton = new JButton("Display the Formula 1 Driver Table");
@@ -71,6 +72,7 @@ public class MenuGUI extends Container {
         }
     }
 
+    //Display the driver table
     class DriverTableDisplay implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -83,6 +85,7 @@ public class MenuGUI extends Container {
         }
     }
 
+    //Sort the drivers in ascending order of their points
     class PointSort implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -95,6 +98,7 @@ public class MenuGUI extends Container {
         }
     }
 
+    //Sort the drivers in descending order of their first position counts
     class FirstPositionSort implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -107,6 +111,7 @@ public class MenuGUI extends Container {
         }
     }
 
+    //Generate a random race
     class RandomRace implements ActionListener {
         int index;
         Formula1Driver driver;
@@ -204,6 +209,7 @@ public class MenuGUI extends Container {
         }
     }
 
+    //Generate a random race where the winner is decided by probabilities
     class RandomRaceWithProbability implements ActionListener {
         int index;
         Formula1Driver driver;
@@ -345,6 +351,7 @@ public class MenuGUI extends Container {
         }
     }
 
+    //Display all the races
     class RaceDisplay implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -357,6 +364,7 @@ public class MenuGUI extends Container {
         }
     }
 
+    //Search for races that a driver participated in
     class Search implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -373,6 +381,7 @@ public class MenuGUI extends Container {
         }
     }
 
+    //Display the search results
     class DisplaySearchResultTable extends JPanel implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {

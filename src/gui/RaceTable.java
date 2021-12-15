@@ -10,6 +10,7 @@ public class RaceTable extends JPanel {
     Race race;
 
     RaceTable() {
+        //Names of columns
         String[] columnNames = {"Date",
                 "Position1",
                 "Position2",
@@ -25,6 +26,7 @@ public class RaceTable extends JPanel {
         int noOfRecords = raceArrayList.size();
         Object[][] data = new Object[noOfRecords][11];
 
+        //Add records to data
         for (int count = 0; count < raceArrayList.size(); count++) {
             race = raceArrayList.get(count);
             Object[] record = new Object[]{
@@ -42,6 +44,7 @@ public class RaceTable extends JPanel {
             data[count] = record;
         }
 
+        //Create a table and add the columns and the data
         JTable table = new JTable(data, columnNames);
         table.setFillsViewportHeight(true);
         // Create the scroll pane and add the table to it.

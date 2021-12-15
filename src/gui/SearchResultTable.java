@@ -30,11 +30,13 @@ public class SearchResultTable extends JPanel {
             return;
         }
 
+        //Names of columns
         String[] columnNames = {"Date", "Position"};
 
         int noOfRecords = formula1Driver.participatedRaceCount;
         Object[][] data = new Object[noOfRecords][2];
 
+        //Add records to data
         for (Race value : raceArrayList) {
             race = value;
             for (int driverCount = 0; driverCount < 10; driverCount++) {
@@ -49,7 +51,7 @@ public class SearchResultTable extends JPanel {
             }
         }
 
-
+        //Create a table and add the columns and the data
         JTable table = new JTable(data, columnNames);
         // Create the scroll pane and add the table to it.
         JScrollPane scrollPane = new JScrollPane(table);
