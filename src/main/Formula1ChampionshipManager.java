@@ -110,6 +110,7 @@ public class Formula1ChampionshipManager implements ChampionshipManager {
                 } else {
                     if (driver.team.equals(team)) {
                         System.out.println("\nThis team/manufacturer already has another driver.");
+                        return;
                     }
                 }
             }
